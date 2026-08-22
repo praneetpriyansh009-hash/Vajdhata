@@ -176,7 +176,7 @@ nav.scrolled { padding: 0.9rem 5vw; background: rgba(0,0,0,0.88); backdrop-filte
     margin: 0 auto; 
     z-index: 1; 
 }
-.orbit { position: absolute; border: 1px solid rgba(255,255,255,0.05); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.orbit { position: absolute; border: 1px solid rgba(255,255,255,0.05); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
 .orbit-1 { width: 240px; height: 240px; }
 .orbit-2 { width: 440px; height: 440px; }
 .orbit-3 { width: 650px; height: 650px; }
@@ -193,7 +193,7 @@ nav.scrolled { padding: 0.9rem 5vw; background: rgba(0,0,0,0.88); backdrop-filte
 .sun-sub { display: block; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
 
 /* Planet orbits */
-.planet-orbit { position: absolute; top: 50%; left: 50%; border-radius: 50%; }
+.planet-orbit { position: absolute; top: 50%; left: 50%; border-radius: 50%; pointer-events: none; }
 .po-1 { width: 240px; height: 240px; margin-left: -120px; margin-top: -120px; animation: orbitSpin 14s linear infinite; }
 .po-2 { width: 440px; height: 440px; margin-left: -220px; margin-top: -220px; animation: orbitSpin 24s linear infinite reverse; }
 .po-3 { width: 650px; height: 650px; margin-left: -325px; margin-top: -325px; animation: orbitSpin 36s linear infinite; }
@@ -203,7 +203,7 @@ nav.scrolled { padding: 0.9rem 5vw; background: rgba(0,0,0,0.88); backdrop-filte
 @keyframes orbitSpin { to { transform: rotate(360deg); } }
 
 /* Planets */
-.planet { position: absolute; border-radius: 50%; cursor: none; }
+.planet { position: absolute; border-radius: 50%; cursor: none; pointer-events: auto; }
 .planet-gold { width: 28px; height: 28px; top: -14px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 35% 30%, #ffe8a0, var(--gold)); box-shadow: 0 0 24px var(--gold), 0 0 50px rgba(228,186,115,0.3); animation: counterSpin 14s linear infinite; }
 .planet-green { width: 36px; height: 36px; top: -18px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 35% 30%, #aaffcc, var(--green)); box-shadow: 0 0 30px var(--green), 0 0 60px rgba(167,115,52,0.25); animation: counterSpin 24s linear infinite reverse; }
 .planet-purple { width: 22px; height: 22px; top: -11px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 35% 30%, #d4a0ff, var(--purple)); box-shadow: 0 0 22px var(--purple), 0 0 45px rgba(255,136,0,0.3); animation: counterSpin 36s linear infinite; }
@@ -213,8 +213,14 @@ nav.scrolled { padding: 0.9rem 5vw; background: rgba(0,0,0,0.88); backdrop-filte
 @keyframes counterSpin { to { transform: translateX(-50%) rotate(-360deg); } }
 
 /* Planet tooltips */
-.planet-tooltip { position: absolute; bottom: calc(100% + 18px); left: 50%; transform: translateX(-50%); min-width: 200px; padding: 1rem 1.2rem; opacity: 0; visibility: hidden; transition: 0.3s; pointer-events: none; text-align: center; }
+.planet-tooltip { position: absolute; bottom: calc(100% + 18px); left: 50%; transform: translateX(-50%); min-width: 200px; padding: 1rem 1.2rem; opacity: 0; visibility: hidden; transition: 0.3s; pointer-events: none; text-align: center; z-index: 100; }
 .planet:hover .planet-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-5px); }
+
+/* Pause all planetary motion on hover */
+.solar-system:has(.planet:hover) .planet-orbit,
+.solar-system:has(.planet:hover) .planet {
+    animation-play-state: paused;
+}
 .planet-tooltip strong { display: block; font-size: 1.1rem; margin-bottom: 0.3rem; }
 .planet-tooltip span { display: block; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; }
 .planet-tooltip p { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
